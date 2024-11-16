@@ -4,8 +4,9 @@ A python script which uses OBS-websockets to enable global shortcuts under wayla
 
 ## Requirements
 
-tested on python 3.13 however *should* work on other python3 versions
+tested on python 3.13 and fedora 41 KDE spin however *should* work on other python3 versions and other linux distributions
 
-OBS websockets installed and enabled. These may be included iin newer versions of OBS, check the upper toolbar menus the settings should be there if installed
+OBS websockets installed and enabled. These may be included in newer versions of OBS, check the upper toolbar menus the settings should be there if installed
 
 installing packages system-wide will make the process of running the script far simpler
+
