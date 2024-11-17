@@ -1,25 +1,17 @@
 import obsws_python as obs
 import sys
-# import json
-
-### CONFIG ###
-config = {
-    "host": "localhost", 
-    "port": 4455, 
-    "password": "e6FkI59oPGgw7lZl", 
-    "timeout": 3
-} # moved config into python file as it has been causing problems with file locations with an external file
+import json
 
 args = sys.argv
 args.pop(0)
 print(args)
 
-# try:
-#     config_file = open("config.json")
-#     config = json.loads(config_file.read())
-# except:
-#     print("config not found or invalid config contents\nEnsure file is correctly formatted and in the directory the script is run from")
-#     exit()
+try:
+    config_file = open("config.json")
+    config = json.loads(config_file.read())
+except:
+    print("config not found or invalid config contents\nEnsure file is correctly formatted and in the directory the script is run from")
+    exit()
 
 
 cl = obs.ReqClient(host=config["host"], port=config["port"], password=config["password"], timeout=config["timeout"])

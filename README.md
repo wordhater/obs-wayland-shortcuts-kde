@@ -10,6 +10,20 @@ OBS websockets installed and enabled. These may be included in newer versions of
 
 installing packages system-wide will make the process of running the script far simpler
 
+
+## Installation
+
+Run the following commands in a terminal to install
+
+Note: this will create a folder in your home folder with the script and some configs in it (no matter where you clone to). It needs to be there for the scripts to work consistently.
+
+```bash
+git clone https://github.com/wordhater/obs-wayland-shortcuts-kde
+cd obs-wayland-shortcuts-kde
+chmod +x install.sh
+./install.sh
+```
+
 ## TODO
 
 - add installation instructions

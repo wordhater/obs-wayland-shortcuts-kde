@@ -1,3 +1,5 @@
 .venv
 notes.txt
 tmp/*
+autoconfig.kksrc
+config.json
