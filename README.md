@@ -26,7 +26,5 @@ chmod +x install.sh
 
 ## TODO
 
-- add installation instructions
-- add an installer script
 - add gnome/other DE support
 - expand available shortcuts
