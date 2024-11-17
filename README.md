@@ -10,3 +10,9 @@ OBS websockets installed and enabled. These may be included in newer versions of
 
 installing packages system-wide will make the process of running the script far simpler
 
+## TODO
+
+- add installation instructions
+- add an installer script
+- add gnome/other DE support
+- expand available shortcuts
