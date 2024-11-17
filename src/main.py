@@ -7,7 +7,7 @@ args.pop(0)
 print(args)
 
 try:
-    config_file = open("config.json")
+    config_file = open(f"{args[0]}/config.json")
     config = json.loads(config_file.read())
 except:
     print("config not found or invalid config contents\nEnsure file is correctly formatted and in the directory the script is run from")

@@ -20,9 +20,39 @@ if [ $DE == "KDE" ] || [ $@ == '-f' ]; then
         mkdir $INSTALLFOLDER
     fi
     cp src/main.py $INSTALLFOLDER/main.py
-    cp config.json $INSTALLFOLDER/config.json
     pip install obsws_python
     # Generate Config
+    echo Config Generation
+    echo -------
+    echo OBS Websockets has to be enabled method varies from device to device but the settings are usually on the top toolbar under tools
+    echo Step 1: Enable the websockets server
+    echo Step 2: Click generate password or type your own password
+    echo
+    echo Is OBS running on the same computer as this script? Y/N : 
+    read hostmode
+    echo Click "Show Connect Info"
+    if [ $hostmode == "Y" ] || [ $hostmode == "y" ]; then
+        host=localhost
+    else
+        echo Enter The server IP:
+        read host
+    fi
+    echo Enter the Server Port:
+    read port
+    echo Enter the Server Password: 
+    read password
+    timeout=3
+    rm config.json
+    cat >config.json <<EOL
+{
+    "host": "${host}",
+    "port": ${port},
+    "password": "${password}",
+    "timeout": ${timeout}
+}    
+EOL
+    cp config.json $INSTALLFOLDER/config.json
+
     # Generate .kksrc file for import into kde settings app
     HOME=~
     rm autoconfig.kksrc
