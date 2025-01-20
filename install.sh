@@ -41,6 +41,13 @@ if [ $DE == "KDE" ] || [ $@ == '-f' ]; then
     read port
     echo Enter the Server Password: 
     read password
+    echo "If you run in a virtual environment (venv), enter full path to the venv folder:"
+    read venv_path
+    if [[ -z "${venv_path}" ]]; then
+      VENV_COMMAND=""
+    else
+      VENV_COMMAND=". ${venv_path}/bin/activate &&"
+    fi
     timeout=3
     rm config.json
     cat >config.json <<EOL
@@ -58,31 +65,31 @@ EOL
     rm autoconfig.kksrc
     cat >autoconfig.kksrc <<EOL
 [Custom Commands][obs.shortcuts.desktop.0]
-Exec=python "${INSTALLFOLDER}/main.py" "${INSTALLFOLDER}" toggle_replay_buffer
+Exec=${VENV_COMMAND} python "${INSTALLFOLDER}/main.py" "${INSTALLFOLDER}" toggle_replay_buffer
 Name=OBS -- Toggle Replay Buffer
 
 [Custom Commands][obs.shortcuts.desktop.1]
-Exec=python "${INSTALLFOLDER}/main.py" "${INSTALLFOLDER}" save_replay_buffer
+Exec=${VENV_COMMAND} python "${INSTALLFOLDER}/main.py" "${INSTALLFOLDER}" save_replay_buffer
 Name=OBS -- Save Replay Buffer
 
 [Custom Commands][obs.shortcuts.desktop.2]
-Exec=python "${INSTALLFOLDER}/main.py" "${INSTALLFOLDER}" start_recording
+Exec=${VENV_COMMAND} python "${INSTALLFOLDER}/main.py" "${INSTALLFOLDER}" start_recording
 Name=OBS -- Start Recording
 
 [Custom Commands][obs.shortcuts.desktop.3]
-Exec=python "${INSTALLFOLDER}/main.py" "${INSTALLFOLDER}" stop_recording
+Exec=${VENV_COMMAND} python "${INSTALLFOLDER}/main.py" "${INSTALLFOLDER}" stop_recording
 Name=OBS -- Stop Recording
 
 [Custom Commands][obs.shortcuts.desktop.4]
-Exec=python "${INSTALLFOLDER}/main.py" "${INSTALLFOLDER}" toggle_virtualcam
+Exec=${VENV_COMMAND} python "${INSTALLFOLDER}/main.py" "${INSTALLFOLDER}" toggle_virtualcam
 Name=OBS -- Toggle Virtual Camera
 
 [Custom Commands][obs.shortcuts.desktop.5]
-Exec=python "${INSTALLFOLDER}/main.py" "${INSTALLFOLDER}" start_virtualcam
+Exec=${VENV_COMMAND} python "${INSTALLFOLDER}/main.py" "${INSTALLFOLDER}" start_virtualcam
 Name=OBS -- Start Virtual Camera
 
 [Custom Commands][obs.shortcuts.desktop.6]
-Exec=python "${INSTALLFOLDER}/main.py" "${INSTALLFOLDER}" stop_virtualcam
+Exec=${VENV_COMMAND} python "${INSTALLFOLDER}/main.py" "${INSTALLFOLDER}" stop_virtualcam
 Name=OBS -- Stop Virtual Camera
 
 EOL
