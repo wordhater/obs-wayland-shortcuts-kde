@@ -20,7 +20,6 @@ if [ $DE == "KDE" ] || [ $@ == '-f' ]; then
         mkdir $INSTALLFOLDER
     fi
     cp src/main.py $INSTALLFOLDER/main.py
-    pip install obsws_python
     # Generate Config
     echo Config Generation
     echo -------
@@ -41,13 +40,22 @@ if [ $DE == "KDE" ] || [ $@ == '-f' ]; then
     read port
     echo Enter the Server Password: 
     read password
-    echo "If you run in a virtual environment (venv), enter full path to the venv folder:"
+    echo "If you wish to run the script in custom a virtual environment (venv), enter full path to the venv folder (Leave blank to use default location): "
     read venv_path
     if [[ -z "${venv_path}" ]]; then
-      VENV_COMMAND=""
+        python3 -m venv "${INSTALLFOLDER}/venv"
+        VENV_COMMAND="${INSTALLFOLDER}/venv/bin/activate &&"
     else
-      VENV_COMMAND=". ${venv_path}/bin/activate &&"
+        if [ -f "${venv_path}/bin/activate" ]; then
+            VENV_COMMAND=". ${venv_path}/bin/activate &&"
+        else
+            echo Creating virtualenv in selected location
+            python3 -m venv $VENV_COMMAND
+            VENV_COMMAND=". ${venv_path}/bin/activate &&"
+        fi
     fi
+    source "${venv_path}/bin/activate"
+    pip install obsws-python
     timeout=3
     rm config.json
     cat >config.json <<EOL
@@ -95,7 +103,7 @@ Name=OBS -- Stop Virtual Camera
 EOL
     echo autoconfig.kkrc generated
     echo
-    echo INSTRUCTIONS - the part I cant do automatically
+    echo INSTRUCTIONS - The part I can\'t do automatically
     echo A settings menu will appear after you hit return, in this menu at the top right there will be a button with the text import. Click it. A popup menu should appear, open the drpdown and select custom scheme then open file and navigate to the directory you cloned the repository into. Open autoconfig.kksrc in the file picker and click import.
     echo Apply the changes and set shortcuts to run the new entries
     kcmshell6 kcm_keys
