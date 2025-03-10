@@ -6,9 +6,23 @@ echo Starting Installer for OBS Wayland Shortcuts
 DE="$XDG_CURRENT_DESKTOP"
 
 # THIS MUST BE A NEW EMPTY FOLDER, DO NOT SET TO ~ OR / OR ANY OTHER FOLDER WITH ITEMS IN IT
-INSTALLFOLDER=~/.OBS_wayland_shortcuts
 
+echo "Where do you want to install the files required for the script to run. Note: please enter full path from root (leave blank for default folder ~/.local/share/obs-wayland-shortcuts): "
+read userinstallfolder
 
+if [ -n "$userinstallfolder" ]; then
+    if [ ${userinstallfolder:0:1} == "/" ] || [ $@ == '-f' ]; then
+        INSTALLFOLDER=$userinstallfolder
+    else
+        echo Incomplete path entered, pass -f when running the script to force custom path
+        exit 1
+    fi
+else
+    echo Default installation location used
+    INSTALLFOLDER=~/.local/share/obs-wayland-shortcuts
+fi
+
+echo Installing to: $INSTALLFOLDER
 
 if [ $DE == "KDE" ] || [ $@ == '-f' ]; then
     echo Installing For Plasma
@@ -25,7 +39,8 @@ if [ $DE == "KDE" ] || [ $@ == '-f' ]; then
     echo -------
     echo OBS Websockets has to be enabled method varies from device to device but the settings are usually on the top toolbar under tools
     echo Step 1: Enable the websockets server
-    echo Step 2: Click generate password or type your own password
+    echo Step 2: Click generate password or type your own 
+    echo Step 3: Click on show connect info for connection details
     echo
     echo Is OBS running on the same computer as this script? Y/N : 
     read hostmode
@@ -40,7 +55,7 @@ if [ $DE == "KDE" ] || [ $@ == '-f' ]; then
     read port
     echo Enter the Server Password: 
     read password
-    echo "If you wish to run the script in custom a virtual environment (venv), enter full path to the venv folder (Leave blank to use default location): "
+    echo "If you wish to run the script in a custom virtual environment (venv), enter full path to the venv folder (Leave blank to use default location): "
     read venv_path
     if [[ -z "${venv_path}" ]]; then
         python3 -m venv "${INSTALLFOLDER}/venv"
@@ -104,7 +119,7 @@ EOL
     echo autoconfig.kkrc generated
     echo
     echo INSTRUCTIONS - The part I can\'t do automatically
-    echo A settings menu will appear after you hit return, in this menu at the top right there will be a button with the text import. Click it. A popup menu should appear, open the drpdown and select custom scheme then open file and navigate to the directory you cloned the repository into. Open autoconfig.kksrc in the file picker and click import.
+    echo A settings menu will appear after you hit return, in this menu at the top right there will be a button with the text import. Click it. A popup menu should appear, open the dropdown and select custom scheme then open file and navigate to the directory you cloned the repository into. Open autoconfig.kksrc in the file picker and click import.
     echo Apply the changes and set shortcuts to run the new entries
     kcmshell6 kcm_keys
 
